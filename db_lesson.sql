@@ -32,7 +32,7 @@ SELECT name, age FROM people WHERE gender = 1 ORDER BY age DESC;
 -- 「peopleテーブルから、department_idが1のレコードを抽出し、name・email・ageカラムをcreated_atの昇順で取得する」
 
 -- Q7: 20代の女性と40代の男性の名前一覧
-SELECT name FROM people 
+SELECT name FROM people
 WHERE (gender = 2 AND age >= 20 AND age < 30)
 OR (gender = 1 AND age >= 40 AND age < 50);
 
@@ -43,7 +43,7 @@ SELECT * FROM people WHERE department_id = 1 ORDER BY age ASC;
 SELECT AVG(age) AS average_age FROM people WHERE department_id = 2 AND gender = 2;
 
 -- Q10: 名前・部署名・日報内容を結合して取得
-SELECT p.name, d.name AS department_name, r.content 
+SELECT p.name, d.name AS department_name, r.content
 FROM people AS p
 INNER JOIN departments AS d ON p.department_id = d.department_id
 INNER JOIN reports AS r ON p.person_id = r.person_id;
