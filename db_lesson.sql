@@ -1,6 +1,6 @@
 -- Q1: 部署テーブルの作成
 CREATE TABLE departments (
-    department_id INT AUTO_INCREMENT PRIMARY KEY,
+    department_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(20) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -13,17 +13,17 @@ ALTER TABLE people ADD department_id INT AFTER email;
 INSERT INTO departments (name) VALUES ('営業'), ('開発'), ('人事'), ('情報システム');
 
 --追加する人の条件(people)
-INSERT INTO people (person_id, department_id, name, email, age, gender) VALUES
-(7, 2, '伊藤 健太', 'ito@example.com', 28, 1),
-(8, 2, '渡辺 まりこ', 'watanabe@example.com', 32, 2),
-(9, 2, '山本 雄大', 'yamamoto@example.com', 40, 1),
-(10, 3, '中村 恵子', 'nakamura@example.com', 45, 2),
-(11, 5, '加藤 浩志', 'kato@example.com', 33, 1),
-(12, 1, '佐藤 健太', 'sato.kenta@example.com', 25, 1),
-(13, 1, '鈴木 結衣', 'suzuki.yui@example.com', 28, 2),
-(14, 1, '高橋 直樹', 'takahashi.naoki@example.com', 32, 1),
-(15, 2, '田中 美咲', 'tanaka.misaki@example.com', 24, 2),
-(16, 4, '伊藤 陽子', 'ito.yoko@example.com', 29, 2);
+INSERT INTO people (department_id, name, email, age, gender) VALUES
+(2, '伊藤 健太', 'ito@example.com', 28, 1),
+(2, '渡辺 まりこ', 'watanabe@example.com', 32, 2),
+(2, '山本 雄大', 'yamamoto@example.com', 40, 1),
+(3, '中村 恵子', 'nakamura@example.com', 45, 2),
+(5, '加藤 浩志', 'kato@example.com', 33, 1),
+(1, '佐藤 健太', 'sato.kenta@example.com', 25, 1),
+(1, '鈴木 結衣', 'suzuki.yui@example.com', 28, 2),
+(1, '高橋 直樹', 'takahashi.naoki@example.com', 32, 1),
+(2, '田中 美咲', 'tanaka.misaki@example.com', 24, 2),
+(4, '伊藤 陽子', 'ito.yoko@example.com', 29, 2);
 
 --追加する日報の条件(reports)
 INSERT INTO reports (person_id, content) VALUES
@@ -80,6 +80,6 @@ INNER JOIN reports ON people.person_id = reports.person_id;
 -- (不思議沢さんの日報を削除した状態で実行)
 DELETE FROM reports WHERE person_id = 6;
 
-SELECT p.name FROM people AS p
-LEFT JOIN reports AS r ON p.person_id = r.person_id
-WHERE r.repot_id IS NULL;
+SELECT people.name FROM people
+LEFT OUTER JOIN reports ON people.person_id = reports.person_id
+WHERE reports.report_id IS NULL;
